@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python src/manage.py test)",
+      "Bash(npm test)",
+      "Bash(npm run build)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(*DROP TABLE*)",
+      "Bash(*--force*)"
+    ]
+  }
+}
