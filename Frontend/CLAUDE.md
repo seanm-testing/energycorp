@@ -58,3 +58,27 @@ python manage.py runserver 8000
 
 - `Browserslist: caniuse-lite is outdated` — cosmetic warning, does not affect functionality
 - `found N vulnerabilities` after install — expected for dependencies from 2020; do not run `npm audit fix` as it may break compatibility
+
+## Testing
+
+52 tests across 14 suites using Jest (bundled with react-scripts 3.0.1) and `@testing-library/react@9.5.0`.
+
+```bash
+nvm use 12
+npm test                                  # Interactive watch mode
+npm test -- --watchAll=false              # Run once
+npm test -- --watchAll=false --coverage   # Run once with coverage report
+```
+
+Coverage is scoped to tested files via `collectCoverageFrom` in `package.json` (~74%).
+
+### Test Infrastructure
+
+- `src/setupTests.js` — Global mocks for `react-translate-component` and `counterpart`. Uses `__esModule = true` on mock functions to handle the `import * as Tr` CommonJS/ESM interop difference between webpack and babel-jest.
+- `src/__mocks__/axios.js` — Mock axios with `jest.fn()` for get/post/put/delete/create.
+- `src/__mocks__/fileMock.js` — Returns `'test-file-stub'` for image imports.
+- `src/__mocks__/styleMock.js` — Returns `{}` for CSS imports.
+
+### Adding New Tests
+
+When testing components that use `react-translate-component` (`import * as Tr from "react-translate-component"`), the global mock in `setupTests.js` handles it automatically. Components that need Redux state should be wrapped with `<Provider store={store}>`. Auth-dependent components should mock `components/auth/auth.js`.

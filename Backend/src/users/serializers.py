@@ -141,8 +141,7 @@ class UpdateClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = [
-            'type_client', 
-            'category',
+            'type_client',
         ]
 
     def update(self, instance, validated_data):

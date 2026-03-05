@@ -55,5 +55,32 @@
     "ajv": "6.10.0",
     "jquery": "3.4.1",
     "typescript": "3.4.5"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "react-test-renderer": "^16.8.6"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/App.js",
+      "src/store.js",
+      "src/components/auth/**/*.js",
+      "src/components/login/**/*.jsx",
+      "src/components/GetBill.jsx",
+      "src/components/Footer/**/*.jsx",
+      "src/components/Sidebar/**/*.jsx",
+      "src/views/admin/CreateUserForm.jsx",
+      "src/views/operator/CreateClient.jsx",
+      "src/views/operator/Payment.jsx",
+      "src/views/manager/CreateReports.jsx",
+      "src/routes/adminRoutes.js",
+      "src/routes/operatorRoutes.js",
+      "src/routes/managerRoutes.js",
+      "src/langs/**/*.js",
+      "!src/**/__tests__/**",
+      "!src/**/__mocks__/**"
+    ]
   }
 }
