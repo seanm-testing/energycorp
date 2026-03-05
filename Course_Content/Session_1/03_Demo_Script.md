@@ -1,8 +1,8 @@
-# Demo Script: Claude Chat, CLI, and IDE
+# Demo Script: Claude Chat, CLI, IDE, and Chrome
 
-**Duration:** 20-25 minutes
+**Duration:** 30-35 minutes
 **Repo:** energycorp (Django REST API + React SPA)
-**Prerequisites:** Claude Code CLI installed, VS Code with Claude Code extension, browser open to claude.ai
+**Prerequisites:** Claude Code CLI installed, VS Code with Claude Code extension, browser open to claude.ai, Chrome with Claude in Chrome extension installed and enabled
 
 ---
 
@@ -12,8 +12,10 @@
 2. Verify Claude Code works: `claude --version`
 3. Open VS Code in the energycorp directory
 4. Open browser to claude.ai
-5. Increase terminal font size for visibility
-6. Close unnecessary tabs/windows to reduce distraction
+5. Verify Claude in Chrome extension is installed and enabled in Chrome
+6. Start the React dev server (`cd Frontend && npm start`) so Chrome can navigate to localhost
+7. Increase terminal font size for visibility
+8. Close unnecessary tabs/windows to reduce distraction
 
 ---
 
@@ -197,7 +199,86 @@ Add a property to this Client model that returns the client's full display name 
 
 ---
 
-## Part 4: Plan Mode (3-5 min)
+## Part 4: Claude in Chrome (~10 min)
+
+### Goal
+Show Claude operating inside the browser — the fourth and final surface.
+
+### Steps
+
+**1.** Open Chrome with the energycorp React app running on localhost (`http://localhost:3000`).
+
+> **Say:** "We've seen Claude in chat, in the terminal, and in the IDE. Now let's see it in the browser. Claude in Chrome is a browser extension that lets Claude see, navigate, and interact with web pages."
+
+**2.** Open the Claude in Chrome side panel (click the Claude extension icon or use the keyboard shortcut).
+
+> **Say:** "The side panel is where you interact with Claude while browsing. It can see what's on your screen and take actions in the browser."
+
+**3.** Ask Claude to describe the running app:
+
+```
+Navigate to http://localhost:3000 and describe what you see on the page.
+```
+
+> **Say:** "Watch — Claude navigates to the page, takes a screenshot, and tells us what it sees. It's reading the actual rendered UI, not source code."
+
+Wait for Claude to navigate and respond. It should describe the login page or whichever page is displayed.
+
+**4.** Ask Claude to identify a specific UI element:
+
+```
+What form fields and buttons are on this page?
+```
+
+> **Say:** "Claude can identify individual UI elements — form fields, buttons, navigation items. This is useful for testing and accessibility reviews."
+
+**5.** Demonstrate the screenshot capability:
+
+```
+Take a screenshot of this page.
+```
+
+> **Say:** "Claude can capture screenshots of the current page state. During development, this is how you verify that your UI changes look right without switching windows."
+
+**6.** Show Claude reading page content and DOM state:
+
+```
+What text content is visible on this page? Are there any console errors?
+```
+
+> **Say:** "Claude reads the actual DOM — not just what's visible, but the underlying page structure. When connected to Claude Code, it can also read console errors and network requests, creating a build-test-debug loop."
+
+**7.** **Safety model segment (2-3 min):**
+
+> **Say:** "Now let's talk about safety — because giving an AI control of your browser is a big deal."
+
+Show the "ask before acting" vs autonomous mode toggle in the extension settings.
+
+> **Say:** "By default, Claude asks before clicking, typing, or navigating. This is 'ask before acting' mode. There's also an autonomous mode where Claude acts without asking — but that should only be used for supervised, low-risk tasks."
+
+Demonstrate the confirmation prompt by asking Claude to do something interactive:
+
+```
+Click on the first input field on this page.
+```
+
+> **Say:** "See the confirmation? Claude tells you what it wants to do and waits for approval. This is the safety gate."
+
+Explain the site blocklist:
+
+> **Say:** "Claude in Chrome blocks certain categories of sites by default — financial services, banking, cryptocurrency exchanges, and adult content. You can't accidentally let Claude log into your bank account."
+
+Present the red-teaming results:
+
+> **Say:** "Anthropic red-teamed Chrome across 123 test cases and 29 attack scenarios. Attack success rates dropped from 23.6% without mitigations to approximately 1% with the current safeguards. That's strong — but not zero. No AI tool is infallible, which connects directly to our next lecture on hallucinations and safe usage."
+
+**8.** Reference the deep-dive resource:
+
+> **Say:** "For a full security analysis of Claude in Chrome and Claude Cowork, read the document in `Course_Resources/ClaudeCowork_ClaudeInChrome.md`. It covers the architecture, known vulnerabilities, and organizational deployment recommendations."
+
+---
+
+## Part 5: Plan Mode (3-5 min)
 
 ### Goal
 Demonstrate Plan Mode as a read-only safety net.
@@ -233,10 +314,11 @@ Plan how you would add a "last_payment_date" field to the Invoice model, includi
 
 ## Demo Wrap-Up
 
-> **Say:** "Let's recap what we just saw:
+> **Say:** "Let's recap the four surfaces we just saw:
 > - Claude Chat is for research and isolated questions — no project access
 > - Claude Code CLI gives Claude full access to your project from the terminal
 > - The VS Code extension provides the same power with visual diffs
+> - Claude in Chrome extends Claude into your browser — navigating pages, reading content, and taking actions, with safety controls you configure
 > - CLAUDE.md is how you teach Claude about your project
 > - Settings.json controls what Claude is allowed to do
 > - @ mentions point Claude at specific files
@@ -256,3 +338,6 @@ Plan how you would add a "last_payment_date" field to the Invoice model, includi
 | @ mentions not autocompleting | Ensure you're in the project root; try pressing Tab after @ |
 | Claude gives wrong project info | Check that CLAUDE.md exists and is correctly formatted |
 | Plan Mode not activating | Try `/plan` command instead of Shift+Tab |
+| Chrome extension not showing in side panel | Check Chrome extensions page (`chrome://extensions`), ensure "Claude in Chrome" by Anthropic is installed and enabled |
+| Chrome can't connect to Claude Code | Requires extension v1.0.36+ and Claude Code v2.0.73+; launch with `claude --chrome` or use `/chrome` |
+| Localhost app not loading in Chrome | Verify `npm start` is running in the Frontend directory; check `http://localhost:3000` loads manually |
