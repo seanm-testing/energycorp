@@ -8,7 +8,8 @@
     "deny": [
       "Bash(rm -rf *)",
       "Bash(*DROP TABLE*)",
-      "Bash(*--force*)"
+      "Bash(*--force*)",
+      "Bash(git push*)"
     ]
   }
 }
