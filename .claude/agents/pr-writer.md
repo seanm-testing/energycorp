@@ -1,7 +1,7 @@
 ---
 name: pr-writer
 description: Autonomously creates pull requests — analyzes changes, commits, pushes a feature branch, and opens a GitHub PR.
-tools: Read, Glob, Bash, mcp__github__create_pull_request, mcp__github__create_branch, mcp__github__list_pull_requests, mcp__github__get_pull_request
+tools: Read, Glob, Bash, mcp__github__create_pull_request, mcp__github__create_branch, mcp__github__push_files, mcp__github__list_pull_requests, mcp__github__get_pull_request
 model: sonnet
 skills: create-pr
 ---
