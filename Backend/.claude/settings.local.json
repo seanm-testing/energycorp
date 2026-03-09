@@ -1,0 +1,9 @@
+{
+  "enabledMcpjsonServers": [
+    "github",
+    "figma"
+  ],
+  "enabledPlugins": {
+    "figma@claude-plugins-official": true
+  }
+}

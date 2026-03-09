@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 src/manage.py test)",
+      "Bash(npm test)",
+      "Bash(npm run build)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(*DROP TABLE*)",
+      "Bash(*--force*)",
+      "Bash(git push*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [{
+          "type": "command",
+          "command": "cd $CLAUDE_PROJECT_DIR/src && python3 manage.py test 2>&1"
+        },
+        {
+          "type": "command",
+          "command": "cd $CLAUDE_PROJECT_DIR/../Frontend && PATH=\"$HOME/.nvm/versions/node/v12.22.12/bin:$PATH\" npm test -- --watchAll=false 2>&1"
+        }]
+      }
+    ]
+  }
+}

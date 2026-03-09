@@ -7,6 +7,10 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}",
         "PATH": "/home/smc/.nvm/versions/node/v18.16.0/bin:/usr/local/bin:/usr/bin:/bin"
       }
+    },
+    "figma": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp"
     }
   }
 }

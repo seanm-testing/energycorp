@@ -82,6 +82,9 @@ Redux store (`store.js`) manages language selection (Spanish/Portuguese/English)
 
 **Testing:** 52 tests across 14 suites using Jest + `@testing-library/react`. Coverage: ~74% (scoped via `collectCoverageFrom` in `package.json`). Setup in `setupTests.js` mocks `react-translate-component` and `counterpart` with `__esModule = true` to handle CommonJS/ESM interop in Jest. Axios mock in `src/__mocks__/axios.js`.
 
+### Pull Requests
+Any time you need to create a pull request, you MUST delegate to the `pr-writer` sub agent using the Agent tool with `subagent_type: "pr-writer"`. Do NOT perform git checkout, commit, push, or PR creation yourself — the agent handles the entire workflow end-to-end. Pass the user's requirements (e.g. branch name) in the prompt.
+
 ### Deployment
 
 - Backend: Docker on Heroku (`Backend/Dockerfile`, `Backend/heroku.yml`)
