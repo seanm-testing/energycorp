@@ -1,12 +1,10 @@
 from rest_framework import serializers
 from users.models import (
     CustomUser,
-    Client,
-    Worker
+    Client
     )
 from energytransfers.models import Counter
 from contract.models import Contract
-from energytransfers.serializers import CounterSerializer
 
 
 class OverdueClientSerializer(serializers.Serializer):

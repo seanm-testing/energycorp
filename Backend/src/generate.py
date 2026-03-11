@@ -1,10 +1,8 @@
 import json
 import random
 import math
-import geopy.distance
 import datetime
 
-from geopy.geocoders import Nominatim
 from django.contrib.auth.hashers import make_password
 
 basejson = []

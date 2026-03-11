@@ -1,6 +1,6 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
-from energytransfers.models import Substation, Transformator, Counter, History
+from energytransfers.models import Substation, Transformator, Counter
 from tests.helpers import (
     create_substation, create_transformator, create_counter, create_history
 )

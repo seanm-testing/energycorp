@@ -1,13 +1,11 @@
 from rest_framework.generics import (
     ListAPIView, 
-    RetrieveAPIView, 
     ListCreateAPIView, 
     RetrieveAPIView, 
     UpdateAPIView,
     DestroyAPIView
 )
 from rest_framework.permissions import BasePermission
-from rest_framework import viewsets
 from django.contrib.auth.hashers import make_password
 
 from users.models import CustomUser, Client, Worker

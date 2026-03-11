@@ -2,16 +2,12 @@
 import tempfile
 from .utils import getInvoiceData, generateHistoryAndInvoices
 from django.http import HttpResponse
-from django.views.generic import View
 from django.template.loader import render_to_string
 from weasyprint import HTML
 #============ end ===========
 #==========needed Imports to send email================
-from django.template.loader import get_template 
-from django.shortcuts import render
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
-import json
 #============end=============
 
 from rest_framework.generics import (
@@ -44,15 +40,9 @@ from .serializers import (
 )
 
 
-from .permissions import (
-    AllowAdmin,
-    AllowManager,
-    AllowOperator
-)
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.views.decorators.csrf import csrf_exempt
 
 
 # ============================================Views para el modúlo de Contrato ==========================
@@ -175,7 +165,7 @@ class GeneratePdf(APIView):
                         response.write(output.read())
 
                     return response
-                except Exception as e:
+                except Exception:
                     message = "Error al buscar la factura, confirme el numero"
                     return Response({"error": False, "find": False, "message":message} )
             else:

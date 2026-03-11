@@ -5,6 +5,7 @@ from .views import (
     TopFiveCounters,
     QuantityCounterTransformator,
     OverdueClients,
+    PaymentSummary,
 )
 
 urlpatterns = [
@@ -12,6 +13,7 @@ urlpatterns = [
     path('topfive/',TopFiveCounters.as_view()),
     path('quantitycounterfortransformator/', QuantityCounterTransformator.as_view()),
     path('overdue-clients/', OverdueClients.as_view()),
+    path('payment-summary/', PaymentSummary.as_view()),
 ]
 
 """

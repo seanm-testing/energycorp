@@ -1,28 +1,31 @@
-from django.shortcuts import render
 from rest_framework.views import View, APIView
 
-from users.models import Client
 from energytransfers.models import Counter
 from contract.models import Contract, Invoice
+from payments.models import Payment
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 
 import json
 import datetime
-from django.db.models import F
+from django.db.models import F, Sum
 
 from django.http import HttpResponse
 
 from .serializers import (
-    MoraSerializer,
     ServiceSuspendedSerializer,
     OverdueClientSerializer,
 )
 
 from .permissions import AllowManager
+from users.models import Client
 
 from django.db.models import Count
 # Create your views here.
+
+
+def get_active_client_count():
+    return Client.objects.filter(user__is_active=True).count()
 
 class MoraAndSuspended(View):
     def get(self, request):
@@ -31,20 +34,20 @@ class MoraAndSuspended(View):
                 client__user__is_active=True).annotate(
                         id=F( 'client__id'),
                         name= F('client__user__name')
-                    
+
                 ).values('id','interes_mora', 'name')
-       
+
         queryset = Contract.objects.exclude(counter__is_active=True).filter(
                 client__user__is_active=True)
-       
+
         query = ServiceSuspendedSerializer(
             queryset,many=True
         ).data
 
-        
-       
 
-       
+
+
+
         dicc= []
         for i in range(len(query)):
             datos = {
@@ -58,9 +61,9 @@ class MoraAndSuspended(View):
             datos['name']= query[i]['client']['user']['name']
             datos['codeCounter']= query[i]['counter']['codeCounter']
             datos['is_active']= query[i]['counter']['is_active']
-           
+
             dicc.append(datos)
-        
+
         response={
             "mora":"",
             "suspended":"",
@@ -74,7 +77,7 @@ class MoraAndSuspended(View):
 
 
 
-        return HttpResponse(json.dumps(response))   
+        return HttpResponse(json.dumps(response))
 
 class TopFiveCounters(View):
      def get(self, request):
@@ -95,16 +98,16 @@ class TopFiveCounters(View):
             'addressCounter',
             'stratum',
             'transformatorCounter')
-        
+
         response={
             "topfiveplus":"" ,
             "topfiveminus":""
         }
         response['topfiveplus']=list(queryset1)
         response['topfiveminus']=list(queryset2)
-   
 
-        return HttpResponse(json.dumps(response))  
+
+        return HttpResponse(json.dumps(response))
 
 class QuantityCounterTransformator(View):
     def get(self, request):
@@ -145,6 +148,19 @@ class OverdueClients(APIView):
 
         serializer = OverdueClientSerializer(results, many=True)
         return Response(serializer.data)
+
+
+class PaymentSummary(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [AllowManager]
+
+    def get(self, request):
+        summary = Payment.objects.aggregate(
+            total_payments=Count('codePayment'),
+            total_value=Sum('valuePayment'),
+        )
+        summary['total_value'] = summary['total_value'] or 0
+        return Response(summary)
 
 
 """

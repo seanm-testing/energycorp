@@ -1,6 +1,5 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
-from commercial.models import Commercial
 from tests.helpers import create_commercial
 
 

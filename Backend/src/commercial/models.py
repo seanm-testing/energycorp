@@ -1,6 +1,5 @@
 from django.db import models
 # Para asociar los contadores a su respectivo Cliente
-from users.models import Client
 
 # Create models here........................................................................
 """ The models in this File are the objetcs than respresent the Publicity."""

@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from tests.helpers import (
     create_custom_user, create_client, create_substation,
     create_transformator, create_counter, create_contract,
-    create_invoice, create_commercial, create_worker
+    create_invoice, create_worker
 )
 
 

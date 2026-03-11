@@ -1,9 +1,7 @@
 import datetime
 import random
 from .models import Contract, Invoice
-from .serializers import ContractSerializer
-from energytransfers.models import Counter, History
-import json
+from energytransfers.models import History
 
 def generateHistoryAndInvoices():
     contratos = Contract.objects.all()

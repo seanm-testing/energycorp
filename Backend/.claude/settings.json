@@ -16,16 +16,68 @@
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
-        "hooks": [{
-          "type": "command",
-          "command": "cd $CLAUDE_PROJECT_DIR/src && python3 manage.py test 2>&1"
-        },
-        {
-          "type": "command",
-          "command": "cd $CLAUDE_PROJECT_DIR/../Frontend && PATH=\"$HOME/.nvm/versions/node/v12.22.12/bin:$PATH\" npm test -- --watchAll=false 2>&1"
-        }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd $CLAUDE_PROJECT_DIR && ruff check --fix src/ 2>&1 | tail -20"
+          },
+          {
+            "type": "command",
+            "command": "cd $CLAUDE_PROJECT_DIR/src && python3 manage.py test --failfast 2>&1 | tail -30"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/audit-permissions.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/block-dangerous.sh"
+          },
+          {
+            "type": "prompt",
+            "model": "haiku",
+            "prompt": "You are a code safety reviewer. The Bash command in tool_input.command may contain inline code (python3 -c, python3 -m, node -e, or similar). If the command contains inline code, analyze what the code actually does. DENY if the inline code deletes records, drops tables, truncates data, overwrites files, or performs any destructive write operation. ALLOW if the inline code only reads data, prints output, counts records, or performs analysis. Also ALLOW commands that do not contain inline code — those are handled by other hooks."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/validate-prompt.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/review-on-stop.sh"
+          },
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/scan-on-stop.sh"
+          }
+        ]
       }
     ]
   },
-  "additionalDirectories": ["../Frontend"]
+  "additionalDirectories": [
+    "../Frontend"
+  ]
 }

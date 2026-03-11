@@ -1,8 +1,7 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
-from rest_framework import status
 from django.contrib.auth.hashers import check_password
-from users.models import CustomUser, Client, Worker
+from users.models import CustomUser, Client
 from tests.helpers import create_custom_user, create_client, create_worker
 
 

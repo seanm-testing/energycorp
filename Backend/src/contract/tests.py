@@ -1,8 +1,6 @@
-import datetime
 from django.test import TestCase
-from django.db import IntegrityError
 from rest_framework.test import APIClient
-from contract.models import Contract, Invoice
+from contract.models import Invoice
 from contract.utils import generateHistoryAndInvoices
 from energytransfers.models import History
 from tests.helpers import (

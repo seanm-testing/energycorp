@@ -22,13 +22,11 @@ from energytransfers.serializers import (
     DeleteSubstationSerializer,
 
     TransformatorSerializer,
-    CreateTransformatorSerializer,
     UpdateTransformatorSerializer,
     InactivateTransformatorSerializer,
     DeleteTransformatorSerializer,
 
     CounterSerializer,
-    CounterHistoriesSerializer,
     CreateCounterSerializer,
     UpdateCounterSerializer,
     InactivateCounterSerializer,
@@ -41,14 +39,7 @@ from energytransfers.serializers import (
     # QUERY SERIALIZERS
 )
 
-from .permissions import (
-    AllowAdmin,
-    AllowManager,
-    AllowOperator
-)
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
 
 # ============================================Views para el modúlo Energy Transfers==========================
 

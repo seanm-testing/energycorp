@@ -3,7 +3,6 @@ from django.urls import path
 from .views import (
 #   CRUDS
     SubstationList,
-    SubstationDelete,
     SubstationDetail,
     SubstationCreate,
     SubstationUpdate,
@@ -25,7 +24,6 @@ from .views import (
     CounterInactivate,
 
     HistoryList,
-    HistoryDelete,
     HistoryDetail,
     HistoryCreate,
     HistoryUpdate,
