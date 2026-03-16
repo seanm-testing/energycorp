@@ -48,6 +48,7 @@
 
   /* Body sizes */
   --font-size-base:           14px;    /* Regular 400, body text  */
+  --font-size-large:          18px;    /* Large body text         */
   --font-size-medium:         16px;    /* EC_Body / EC_Body_Bold  */
   --font-size-sm:             12px;    /* EC_Label_sm — captions  */
   --font-size-xs:             10px;    /* mini labels, metadata   */

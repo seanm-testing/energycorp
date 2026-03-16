@@ -27,7 +27,8 @@ elif echo "$COMMAND" | grep -qE '\.env'; then
 elif echo "$COMMAND" | grep -qE '\-\-force\s+push|push\s+.*\-\-force'; then
   BLOCKED=true
   REASON="Safety: force push is blocked by project policy"
-elif echo "$COMMAND" | grep -qE 'manage\.py\s+(migrate|flush|dbshell)'; then
+elif echo "$COMMAND" | grep -qE 'manage\.py\s+(migrate|flush|dbshell)' \
+  && ! echo "$COMMAND" | grep -qE 'manage\.py\s+(migrate\s+--check|showmigrations|sqlmigrate)'; then
   BLOCKED=true
   REASON="Database safety: destructive manage.py commands are blocked by project policy"
 fi

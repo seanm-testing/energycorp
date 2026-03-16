@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 # Hook: scan-on-stop
-# Triggers security-scanner agent when security-relevant files were modified.
+# Triggers security-scanner agent when security-relevant files were modified in this response.
+# Reads from the tracker file written by track-changed-files.sh (PostToolUse hook),
+# so it only sees files Claude actually edited — not pre-existing dirty files.
 # Only fires once per session — uses stop_hook_active + session_id flag.
 
 set -euo pipefail
 
+TRACKER_FILE="/tmp/claude-hooks/changed-files.txt"
 DEBUG_LOG="/tmp/claude-hooks/scan-debug.log"
 mkdir -p /tmp/claude-hooks
 
@@ -35,8 +38,22 @@ if [ -f "$FLAG_FILE" ]; then
   exit 0
 fi
 
-# Get modified files relative to HEAD
-changed_files=$(git diff --name-only HEAD 2>/dev/null || true)
+# Read files changed in this response from the tracker (written by PostToolUse hook)
+if [ ! -f "$TRACKER_FILE" ] || [ ! -s "$TRACKER_FILE" ]; then
+  echo "APPROVED: no files changed in this response" >> "$DEBUG_LOG"
+  echo '{"decision": "approve"}'
+  exit 0
+fi
+
+changed_files=$(sort -u "$TRACKER_FILE")
+
+# Skip if only .md files were changed
+non_md_files=$(echo "$changed_files" | grep -v '\.md$' || true)
+if [ -z "$non_md_files" ]; then
+  echo "APPROVED: only .md files changed" >> "$DEBUG_LOG"
+  echo '{"decision": "approve"}'
+  exit 0
+fi
 
 # Filter for .py files and dependency/config files
 security_files=$(echo "$changed_files" | grep -E '\.(py)$|requirements\.txt|package\.json|\.env|settings\.py|docker-compose' || true)
