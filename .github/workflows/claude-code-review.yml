@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: read
+      pull-requests: write
       issues: read
       id-token: write
 
@@ -36,6 +36,7 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          settings: .claude/settings.json
           claude_args: |
             --permission-mode dontAsk
             --max-turns 15
@@ -52,11 +53,19 @@ jobs:
             5. Documentation: Check if the code is well-documented and suggest improvements if necessary.
 
             Additionally, please check for the following specific issues in Django code:
-            
+
               1. Check that all views have permission_classes explicitly set.
             2. Verify serializer field lists are explicit (not fields = '__all__').
             3. Flag any views or endpoints missing tests.
             4. Check for hardcoded secrets or sensitive information in the code (e.g., API keys, database credentials, etc.).
 
-            Please provide specific feedback and actionable suggestions for improvement in the review comments. If there are no issues, please acknowledge that the code looks good.
+            Additionally, please check for the following specific issues in React/Frontend code:
 
+            5. All components must be class-based (extending React.Component). Flag any functional components or React hooks (useState, useEffect, etc.).
+            6. All user-visible text must have translations in all three language files (langs/spanish.js, langs/english.js, langs/portuguese.js). Flag any hardcoded UI strings.
+            7. CSS values must use design tokens with fallbacks: var(--token-name, fallback). Flag any hardcoded colors, font sizes, or spacing that match existing design tokens in Frontend/src/assets/css/design-tokens.css.
+            8. Icons must use the Nucleo icon font (nc-icon nc-*). Flag any inline SVGs or external icon libraries.
+            9. Verify URL patterns follow the convention: /api/<app-name>/<resource>/ (plural nouns).
+            10. Verify test names follow the pattern: test_<action>_<condition>_<expected>.
+
+            Please provide specific feedback and actionable suggestions for improvement in the review comments. If there are no issues, please acknowledge that the code looks good.
