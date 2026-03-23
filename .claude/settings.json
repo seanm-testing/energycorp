@@ -8,18 +8,23 @@
       "Bash(npm run build)",
       "Bash(flake8*)",
       "Bash(black --check*)",
+      "Bash(ruff*)",
       "Bash(*manage.py migrate --dry-run*)",
+      "Bash(*manage.py migrate --check*)",
       "Bash(*manage.py makemigrations --dry-run*)",
+      "Bash(*manage.py makemigrations --check*)",
       "Read(*)"
     ],
     "deny": [
       "Bash(*rm -rf*)",
       "Bash(*DROP TABLE*)",
-      "Bash(*--force*)",
+      "Bash(git*--force*)",
       "Bash(git push*)",
       "Bash(*git reset --hard*)",
-      "Bash(*manage.py migrate*)",
-      "Bash(*manage.py makemigrations*)",
+      "Bash(*manage.py flush*)",
+      "Bash(*manage.py dbshell*)",
+      "Bash(*manage.py createsuperuser*)",
+      "Read(*.env*)",
       "Edit(*.env*)",
       "Write(*.env*)"
     ]

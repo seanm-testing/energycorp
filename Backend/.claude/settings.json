@@ -1,15 +1,23 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 src/manage.py test)",
-      "Bash(npm test)",
-      "Bash(npm run build)"
+      "Bash(python3 src/manage.py test*)",
+      "Bash(npm test*)",
+      "Bash(npm run build)",
+      "Bash(ruff*)"
     ],
     "deny": [
-      "Bash(rm -rf *)",
+      "Bash(*rm -rf*)",
       "Bash(*DROP TABLE*)",
-      "Bash(*--force*)",
-      "Bash(git push*)"
+      "Bash(git*--force*)",
+      "Bash(git push*)",
+      "Bash(*git reset --hard*)",
+      "Bash(*manage.py flush*)",
+      "Bash(*manage.py dbshell*)",
+      "Bash(*manage.py createsuperuser*)",
+      "Read(*.env*)",
+      "Edit(*.env*)",
+      "Write(*.env*)"
     ]
   },
   "hooks": {
