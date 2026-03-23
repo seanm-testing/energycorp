@@ -36,8 +36,12 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
-          plugins: 'code-review@claude-code-plugins'
+          claude_args: |
+            --permission-mode dontAsk
+            --max-turns 15
+            --model opus
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
+          track_progress: true
           prompt: |
             You are a highly skilled Django and React code review assistant. Your task is to review the changes in this pull request and provide feedback to help improve the code quality. Please focus on the following aspects:
 
@@ -54,5 +58,5 @@ jobs:
             3. Flag any views or endpoints missing tests.
             4. Check for hardcoded secrets or sensitive information in the code (e.g., API keys, database credentials, etc.).
 
-            Please provide specific feedback and actionable suggestions for improvement. If there are no issues, please acknowledge that the code looks good.
+            Please provide specific feedback and actionable suggestions for improvement in the review comments. If there are no issues, please acknowledge that the code looks good.
 
